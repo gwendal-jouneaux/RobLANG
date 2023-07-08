@@ -1,0 +1,104 @@
+Robot robby {
+	let void Main () {
+        // init constants
+        var int INTERVAL = 5 * 60 * 1000
+        var int NOMINAL_SPEED = 3
+        var double[2] LOCATIONS = getLocations()
+        var double[1] BASE = getPosition
+
+        setNominalSpeed(NOMINAL_SPEED)
+        var int numberOfActivation = 10
+        var int lastActivation = getTime
+        var bool firstLocation = true
+
+        loop numberOfActivation > 0 
+        {
+            var double[1] position = getPosition
+            if firstLocation {
+                var double[1] target = Array.get(LOCATIONS, 0)
+            } else {
+                var double[1] target = Array.get(LOCATIONS, 1)
+            }
+            firstLocation = ! firstLocation
+            
+            var double[1] movement = getVector(position, target)
+            var double dist = dist(movement)
+            var double minTime = dist / getMaxSpeed()
+            var double maxTime = INTERVAL - (getTime - lastActivation)
+            var double nominalTime = dist / getNominalSpeed()
+            var double lower = nominalTime/maxTime - 1
+            var double higher = nominalTime/minTime - 1
+            [Time lower higher] goToBefore(target, lastActivation + INTERVAL, lower, higher)
+        }
+	}
+
+    let double[2] getLocations(){
+        var double[2] out = Array.new(2)
+        var double[1] firstLoc = Array.new(1)
+        var double[1] secondLoc = Array.new(1)
+        Array.add(firstLoc, 50)
+        Array.add(firstLoc, 75)
+        Array.add(secondLoc, -10)
+        Array.add(secondLoc, -60)
+        Array.add(out, firstLoc)
+        Array.add(out, secondLoc)
+    }
+
+    let void goToBefore(double[1] target, int deadline, double lower, double higher){
+        var double forwardLower = lower
+        var double forwardHigher = higher
+        var double[1] position = getPosition
+        var double[1] movement = getVector(position, target)
+        orientTo(angle(movement))
+        var bool arrived = false
+        loop ! arrived {
+            if getDistance(0) > 5 {
+                [Time forwardLower forwardHigher] Forward 5
+                position = getPosition
+                movement = getVector(position, target)
+            } else {
+                [Time 0 0] avoidObstacle(target)
+                position = getPosition
+                movement = getVector(position, target)
+                orientTo(angle(movement))
+
+                var double maxTime = deadline - getTime
+                if maxTime < 0 {
+                    forwardLower = forwardHigher - 0.1
+                } else {
+                    var double nominalTime = dist / getNominalSpeed()
+                    forwardLower = nominalTime/maxTime - 1
+                }
+            }
+            
+            if dist(movement) < 2.5{
+                arrived = true
+            }
+        }
+    }
+ 
+    let void avoidObstacle(double[1] target){
+        Forward 50
+        // TODO
+    }
+
+    let void orientTo(double angle){
+        // TODO
+    }
+
+    let double[1] getVector(double[1] p1, double[1] p2){
+        var double[1] out = Array.new(1)
+        Array.add(out, Array.get(p2, 0) - Array.get(p1, 0))
+        Array.add(out, Array.get(p2, 1) - Array.get(p1, 1))
+        return out
+    }
+
+    let double dist(double[1] vec){
+        var double out = Array.get(vec, 0) * Array.get(vec, 0) + Array.get(vec, 1) * Array.get(vec, 1)
+        return Math.sqrt(out)
+    }
+
+    let double angle(double[1] vec){
+        // TODO
+    }
+}

@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	<groupId>fr.gjouneau.self.adaptation.framework</groupId>
+	<artifactId>Handcraft.RobLANG</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    </parent>
+		<groupId>fr.gwendal_jouneaux.rob_lang</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+  <artifactId>fr.gwendal_jouneaux.rob_lang.execute</artifactId>
+  
+  <dependencies>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtextVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.gwendal_jouneaux.rob_lang</groupId>
+    		<artifactId>fr.gwendal_jouneaux.rob_lang</artifactId>
+    		<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

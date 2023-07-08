@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<parent>
+	<groupId>fr.gjouneau.self.adaptation.framework</groupId>
+	<artifactId>Handcraft.RobLANG</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    </parent>
+<groupId>fr.gwendal_jouneaux.rob_lang</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	<artifactId>WebotProject</artifactId>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+    </properties>
+    <packaging>pom</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>fr.gwendal_jouneaux.rob_lang</groupId>
+		<artifactId>fr.gwendal_jouneaux.rob_lang.webots</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>make_project</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${basedir}/make_project.sh</executable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean_project</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${basedir}/clean_project.sh</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
